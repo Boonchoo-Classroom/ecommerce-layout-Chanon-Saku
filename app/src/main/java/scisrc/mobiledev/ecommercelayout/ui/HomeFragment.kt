@@ -13,18 +13,18 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // ONLY inflate layout here
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    // function to do the action in this fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
 
+        val featuredItems = listOf("Item 1", "Item 2", "Item 3")
+        val promotions = listOf("Promo 1", "Promo 2", "Promo 3")
+
+    }
 }

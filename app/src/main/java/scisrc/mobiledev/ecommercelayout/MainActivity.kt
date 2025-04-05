@@ -5,19 +5,19 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import scisrc.mobiledev.ecommercelayout.databinding.ActivityMainBinding
 import scisrc.mobiledev.ecommercelayout.ui.HomeFragment
+import scisrc.mobiledev.ecommercelayout.ui.ProductListFragment
+import scisrc.mobiledev.ecommercelayout.ui.CartFragment
+import scisrc.mobiledev.ecommercelayout.ui.ProfileFragment
+import scisrc.mobiledev.ecommercelayout.ui.FavoritesFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -35,9 +35,6 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_home -> {
@@ -45,8 +42,27 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.fragment_container, HomeFragment())
                         .commit()
                 }
+                R.id.nav_product_list -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, ProductListFragment())
+                        .commit()
+                }
+                R.id.nav_cart -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, CartFragment())
+                        .commit()
+                }
+                R.id.nav_profile -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, ProfileFragment())
+                        .commit()
+                }
+                R.id.nav_favorites -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, FavoritesFragment())
+                        .commit()
+                }
             }
-
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
@@ -60,6 +76,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        return super.onSupportNavigateUp()
     }
 }
