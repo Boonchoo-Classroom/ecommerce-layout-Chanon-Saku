@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import scisrc.mobiledev.ecommercelayout.databinding.ActivityMainBinding
 import scisrc.mobiledev.ecommercelayout.ui.HomeFragment
 
@@ -16,16 +17,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup toolbar
         setSupportActionBar(binding.toolbar)
 
-        // Initialize navigation
         drawerLayout = binding.drawerLayout
 
-        // Add hamburger icon
         val toggle = ActionBarDrawerToggle(
             this,
             drawerLayout,
@@ -36,7 +35,9 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        // Handle NavigationView item clicks
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_home -> {
@@ -44,13 +45,12 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.fragment_container, HomeFragment())
                         .commit()
                 }
-
             }
+
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
 
-        // Load default fragment
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, HomeFragment())
